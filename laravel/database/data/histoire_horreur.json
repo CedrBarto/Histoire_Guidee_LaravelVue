@@ -1,0 +1,461 @@
+{
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Réveil dans la pièce",
+      "description": "Tu te réveilles, enchaîné dans une pièce sombre. Une odeur métallique flotte dans l’air.",
+      "image": "scene1.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Regarder autour de soi",
+          "next_scene_id": 2
+        },
+        {
+          "text": "Crier à l’aide",
+          "next_scene_id": 99
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 2,
+      "title": "Inspection de la pièce",
+      "description": "Tu vois un cadavre, un magnétophone, une scie rouillée.",
+      "image": "scene2.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Écouter le magnétophone",
+          "next_scene_id": 3
+        },
+        {
+          "text": "Ne rien faire et crier à nouveau",
+          "next_scene_id": 98
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 3,
+      "title": "Le message",
+      "description": "Un message se lance : 'Tu veux vivre ? Fais les bons choix ou tu finiras tes jours ici.'",
+      "image": "scene3.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Fouiller le cadavre",
+          "next_scene_id": 4,
+          "item_reward": [1, 2]
+        },
+        {
+          "text": "Couper la chaîne avec la scie",
+          "next_scene_id": 5
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 4,
+      "title": "Cadavre dépouillé",
+      "description": "Tu trouves une vieille clé et une arme dans la poche du cadavre.",
+      "image": "scene4.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Se détacher",
+          "next_scene_id": 6
+        },
+        {
+          "text": "Tirer avec l'arme",
+          "next_scene_id": 97,
+          "item_reward": null
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 5,
+      "title": "Chaîne trop solide",
+      "description": "Impossible de briser la chaîne, tu perds du temps...",
+      "image": "scene5.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Fouiller le cadavre",
+          "next_scene_id": 4
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 6,
+      "title": "Enfin détaché !",
+      "description": "Tu es désormais détaché. Deux portes s'offrent à toi : l'une avec un symbole de crâne, l'autre avec un œil.",
+      "image": "scene6.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Entrer par la porte avec l'oeil",
+          "next_scene_id": 7
+        },
+        {
+          "text": "Entrer par la porte avec le crâne",
+          "next_scene_id": 8
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 7,
+      "title": "Énigme : résouds le rébus",
+      "description": "Un rébus est affiché sur le mur. Résous-le pour avancer.",
+      "image": "scene7.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Résoudre le rébus",
+          "next_scene_id": 9,
+          "type": "riddle",
+          "answer": "la mort, mort"
+        },
+        {
+          "text": "Forcer la trappe au sol",
+          "next_scene_id": 96,
+          "type": "normal"
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 8,
+      "title": "Salle du miroir-visage",
+      "description": "De qui est ce visage se trouvant dans le miroir ?.",
+      "image": "scene8.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Trouve qui est ce personnage d'une série si mythique et cruel ?",
+          "next_scene_id": 9,
+          "type": "riddle",
+          "answer": "jigsaw, Jigsaw"
+        },
+        {
+          "text": "Tenter de briser le miroir",
+          "next_scene_id": 95,
+          "type": "normal"
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 9,
+      "title": "Trappe ouverte",
+      "description": "Une trappe s’ouvre dans le sol avec des escaliers qui descendent.",
+      "image": "scene9.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Descendre",
+          "next_scene_id": 10
+        },
+        {
+          "text": "Faire demi-tour",
+          "next_scene_id": 94
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 10,
+      "title": "Créature flippante",
+      "description": "Une entité bien flippante bouge quand tu ne la regardes pas.",
+      "image": "scene10.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Avancer doucement et le regarder dans les yeux",
+          "next_scene_id": 11
+        },
+        {
+          "text": "Courir et éviter son regard",
+          "next_scene_id": 93
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 11,
+      "title": "Salle obscure",
+      "description": "Tu as échapé à l'entité ! Tu te retrouves dans une salle sombre et tu trouves une lampe torche dans un tiroir.",
+      "image": "scene11.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Prendre la lampe torche",
+          "next_scene_id": 12,
+          "item_reward": 3
+        },
+        {
+          "text": "Avancer dans le noir",
+          "next_scene_id": 92,
+          "item_reward": null
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 12,
+      "title": "Code mural",
+      "description": "Avec la lampe torche, tu vois des chiffres peint sur les murs et une porte verrouillée.",
+      "image": "scene12.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Essayer les chiffres sur le cadenas de la porte",
+          "next_scene_id": 13
+        },
+        {
+          "text": "Essayer de forcer la poignée de la porte",
+          "next_scene_id": 91
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 13,
+      "title": "Porte déverrouillée",
+      "description": "Tu as ouvert la porte mais le chemin se sépare en deux couloirs.",
+      "image": "scene13.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Couloir gauche (eau)",
+          "next_scene_id": 14
+        },
+        {
+          "text": "Couloir droit (feu)",
+          "next_scene_id": 15
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 14,
+      "title": "Salle inondée",
+      "description": "Un générateur grésille près de l’eau.",
+      "image": "scene14.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Longer le bord de la salle en s'aggrippant aux barres",
+          "next_scene_id": 16
+        },
+        {
+          "text": "Marcher dans l’eau",
+          "next_scene_id": 90
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 15,
+      "title": "Salle en feu",
+      "description": "Un extincteur est posé près de l’entrée.",
+      "image": "scene15.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Utiliser l’extincteur, qui est presque vide",
+          "next_scene_id": 16
+        },
+        {
+          "text": "Courir à travers les flammes",
+          "next_scene_id": 89
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 16,
+      "title": "Sortie",
+      "description": "Tu arrives devant une grande porte blanche.",
+      "image": "scene16.png",
+      "sound": null,
+      "is_ending": false,
+      "choices": [
+        {
+          "text": "Actionner le levier pour ouvrir la porte",
+          "next_scene_id": 88
+        },
+        {
+          "text": "Ouvrir la porte sans actionner le levier",
+          "next_scene_id": 17
+        }
+      ],
+      "item_reward": null
+    },
+    {
+      "id": 17,
+      "title": "Liberté",
+      "description": "Tu ouvres la porte et sors, face à toi se trouve une grande salle remplie de personnes qui t'applaudissent.",
+      "image": "scenefinal.png",
+      "sound": null,
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null 
+    },
+    {
+      "id": 99,
+      "title": "Fin : Aucun secours",
+      "description": "Tu cries à l’aide, mais personne ne t’entend, la silhouette t'attaque",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 98,
+      "title": "Fin : Gaz",
+      "description": "Le gaz t’endort à jamais...",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 97,
+      "title": "Fin : Tu t'es tiré une balle",
+      "description": "Tu n'as même pas essayé de te sortir de cette situation.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 96,
+      "title": "Fin : Compressé",
+      "description": "Les murs de la pièces se referment sur toi quand tu forces la trappe.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 95,
+      "title": "Fin : Projection de morceaux de miroir",
+      "description": "Les morceaux du miroir éclatent dans tes yeux, tu finis par mourir.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 94,
+      "title": "Fin : Piégé à jamais",
+      "description": "La trappe se referme derrière toi et les portes aussi, tu es coicé pour toujours.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 93,
+      "title": "Fin : L'entité t’attrape",
+      "description": "Tu cours, mais elle te rattrape...",
+      "image": "creature.png",
+      "sound": "creature.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 92,
+      "title": "Fin : Chute",
+      "description": "Tu trébuches dans le noir et ne te relèves plus.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 91,
+      "title": "Fin : Porte piégée",
+      "description": "Des piques tranchant te tombe dessus en essayant de forcer la porte.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 90,
+      "title": "Fin : Électrocuté",
+      "description": "Tu te fais électrocuter.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 89,
+      "title": "Fin : Brûlé vif",
+      "description": "Tu n'as pas survécu au feu.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    },
+    {
+      "id": 88,
+      "title": "Fin : Levier piégé",
+      "description": "Une trappe s'ouvre et tu tombes dans le vide.",
+      "image": "mort.png",
+      "sound": "mort.mp3",
+      "is_ending": true,
+      "choices": [],
+      "item_reward": null
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "Clé rouillée",
+      "description": "Permet de se libérer"
+    },
+    {
+      "id": 2,
+      "name": "Arme",
+      "description": "Pour se défendre"
+    },
+    {
+      "id": 3,
+      "name": "Lampe torche",
+      "description": "Pour voir dans le noir"
+    }
+  ]
+}
