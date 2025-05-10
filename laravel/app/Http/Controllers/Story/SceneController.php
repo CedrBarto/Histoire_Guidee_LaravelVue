@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Story;
 
 use App\Http\Controllers\Controller;
 use App\Models\Scene;
-use App\Models\Choice;
 use App\Models\Item;
 use Illuminate\Http\Request;
 
@@ -17,8 +16,10 @@ class SceneController extends Controller
     {
         $scene = Scene::with('choices')->findOrFail($id);
         
-        // Si on change de scène, on réinitialise le compteur d'erreurs d'énigme
-        session(['riddle_attempts' => 0]);
+        // Pour l'API, renvoyer les données au format JSON
+        if (request()->expectsJson()) {
+            return response()->json(['scene' => $scene]);
+        }
         
         // Si la scène est une fin et qu'elle est mauvaise, on réinitialise l'inventaire
         if ($scene->is_ending && $scene->id != 17) { // 17 est la bonne fin
@@ -34,92 +35,22 @@ class SceneController extends Controller
         
         return view('story.scene', [
             'scene' => $scene, 
-            'inventory' => $inventoryItems,
-            'riddleError' => session('riddleError'),
-            'riddleAttempts' => session('riddle_attempts', 0)
+            'inventory' => $inventoryItems
         ]);
     }
     
     /**
-     * Traite le choix fait par l'utilisateur et redirige vers la prochaine scène
+     * Récupère la première scène pour l'API
      */
-    public function choose($choiceId)
-{
-    $choice = Choice::findOrFail($choiceId);
-    $sessionToken = session('session_token', \Str::uuid());
-    
-    // Récupérer ou créer la session de jeu
-    $gameSession = GameSession::firstOrCreate(
-        ['session_token' => $sessionToken],
-        ['current_scene_id' => 1]
-    );
-    
-    // Mettre à jour la scène actuelle
-    $gameSession->current_scene_id = $choice->next_scene_id;
-    $gameSession->save();
-    
-    // Traiter les récompenses d'items
-    if ($choice->item_reward) {
-        $itemsAdded = [];
-        
-        if (is_array($choice->item_reward)) {
-            // Cas où item_reward est un tableau d'IDs
-            foreach ($choice->item_reward as $itemId) {
-                $gameSession->items()->syncWithoutDetaching([$itemId]);
-                $itemsAdded[] = Item::find($itemId);
-            }
-        } else {
-            // Cas où item_reward est un seul ID
-            $gameSession->items()->syncWithoutDetaching([$choice->item_reward]);
-            $itemsAdded[] = Item::find($choice->item_reward);
-        }
-        
-        // Afficher un message pour chaque item obtenu
-        foreach ($itemsAdded as $item) {
-            session()->flash('item_acquired', 
-                session('item_acquired', '') . "Vous avez obtenu : {$item->name}. ");
-        }
-    }
-    
-    // Redirection vers la scène suivante
-    return redirect()->route('scene.show', $choice->next_scene_id);
-}
-    
-    /**
-     * Traite la réponse à une énigme
-     */
-    public function solveRiddle(Request $request, $choiceId)
+    public function getFirstScene()
     {
-        $choice = Choice::findOrFail($choiceId);
-        $answer = $request->input('answer');
+        $firstScene = Scene::where('is_first', true)->first();
         
-        // Récupère le nombre d'essais actuel
-        $attempts = session('riddle_attempts', 0);
-        
-        // Vérifie si la réponse est correcte
-        if ($choice->checkAnswer($answer)) {
-            // Réponse correcte, on réinitialise le compteur d'essais
-            session(['riddle_attempts' => 0]);
-            
-            // Redirige vers la prochaine scène
-            return redirect()->route('scene.show', $choice->next_scene_id);
-        } else {
-            // Réponse incorrecte, on incrémente le compteur
-            $attempts++;
-            session(['riddle_attempts' => $attempts]);
-            
-            // Si 3+ tentatives échouées, mort
-            if ($attempts >= 3) {
-                session(['riddle_attempts' => 0]); // Réinitialise pour la prochaine fois
-                session()->flash('message', 'Trop d\'erreurs! La punition est fatale...');
-                return redirect()->route('scene.show', 96); // Redirection vers la mort (ID 96)
-            }
-            
-            // Sinon, on reste sur la même scène avec message d'erreur
-            $remainingAttempts = 3 - $attempts;
-            session()->flash('riddleError', "Mauvaise réponse! Il vous reste {$remainingAttempts} tentative(s).");
-            return redirect()->back();
-        }
+        return response()->json([
+            'scene' => $firstScene,
+            'choices' => $firstScene->choices,
+            'message' => 'Mode histoire sans sauvegarde'
+        ]);
     }
     
     /**
@@ -128,12 +59,78 @@ class SceneController extends Controller
     public function restart($storyId)
     {
         session(['inventory' => []]);
-        session(['riddle_attempts' => 0]);
         
         $firstScene = Scene::where('story_id', $storyId)
                           ->where('id', 1)
                           ->firstOrFail();
         
         return redirect()->route('scene.show', $firstScene->id);
+    }
+
+    /**
+     * Display a listing of the scenes
+     */
+    public function index()
+    {
+        $scenes = Scene::all();
+        
+        return response()->json(['scenes' => $scenes]);
+    }
+
+    /**
+     * Store a newly created scene
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'story_id' => 'required|exists:stories,id',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'is_first' => 'boolean',
+            'is_ending' => 'boolean',
+            // Add other validation rules as needed
+        ]);
+        
+        $scene = new Scene();
+        $scene->story_id = $validated['story_id'];
+        $scene->title = $validated['title'];
+        $scene->content = $validated['content'];
+        $scene->is_first = $validated['is_first'] ?? false;
+        $scene->is_ending = $validated['is_ending'] ?? false;
+        $scene->save();
+        
+        return response()->json(['message' => 'Scene created successfully', 'scene' => $scene], 201);
+    }
+
+    /**
+     * Update the specified scene
+     */
+    public function update(Request $request, $id)
+    {
+        $scene = Scene::findOrFail($id);
+        
+        $validated = $request->validate([
+            'story_id' => 'exists:stories,id',
+            'title' => 'string|max:255',
+            'content' => 'string',
+            'is_first' => 'boolean',
+            'is_ending' => 'boolean',
+            // Add other validation rules as needed
+        ]);
+        
+        $scene->update($validated);
+        
+        return response()->json(['message' => 'Scene updated successfully', 'scene' => $scene]);
+    }
+
+    /**
+     * Remove the specified scene
+     */
+    public function destroy($id)
+    {
+        $scene = Scene::findOrFail($id);
+        $scene->delete();
+        
+        return response()->json(['message' => 'Scene deleted successfully']);
     }
 }

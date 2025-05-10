@@ -15,6 +15,11 @@ class Item extends Model
         'description'
     ];
 
+    // Pour assurer que les relations fonctionne correctement
+    protected $casts = [
+        'id' => 'integer',
+    ];
+
     //Relation avec les scènes où cet objet peut être obtenu
     public function scenes()
     {

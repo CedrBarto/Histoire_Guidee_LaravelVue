@@ -34,7 +34,7 @@ class StorySeeder extends Seeder
         $story = Story::create([
             'title' => 'Histoire d\'horreur',
             'description' => 'Une histoire horrifique où vous devez survivre',
-            // autres champs...
+            'cover_image' => 'histoire_horreur_cover.png',
         ]);
         
         // Créer les items
