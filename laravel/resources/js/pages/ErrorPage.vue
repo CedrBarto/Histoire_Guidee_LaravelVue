@@ -1,3 +1,4 @@
+<!-- Crée l'affichage de la page erreur 404 -->
 <template>
   <div class="error-page">
     <div class="error-container">
@@ -17,9 +18,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import HomePage from './HomePage.vue';
 
 const props = defineProps({
   errorCode: {

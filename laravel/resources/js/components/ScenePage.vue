@@ -1,3 +1,4 @@
+<!-- Gère la logique des scènes -->
 <template>
     <div class="scene-page">
       <div v-if="loading" class="loading">Chargement...</div>
@@ -166,7 +167,6 @@
     watch(data, (newData) => {
       if (newData && newData.scene) {
         scene.value = newData.scene;
-        console.log("Scène chargée:", newData.scene);
         
         // Si c'est la première scène (ID 1), réinitialiser l'inventaire
         if (scene.value.id === 1) {
@@ -193,59 +193,48 @@
   }
   
   function makeChoice(choice) {
-    console.log("Choix complet:", JSON.stringify(choice));
-    
     if (choice.required_item && !hasItem(choice.required_item)) {
-        console.log("Objet requis non présent dans l'inventaire:", choice.required_item);
         return;
     }
     
     if (choice.consumes_item) {
-        console.log("Consommation d'objet:", choice.consumes_item);
         removeFromInventory(parseInt(choice.consumes_item), route.params.storyId, scene.value.id);
     }
     
     if (choice.item_reward) {
-        console.log("Récompense principale:", choice.item_reward);
         addToInventory(parseInt(choice.item_reward), route.params.storyId, scene.value.id);
     }
     
-    if (choice.additional_reward) {
-        console.log("Type de additional_reward:", typeof choice.additional_reward);
-        console.log("Valeur de additional_reward:", choice.additional_reward);
-        
-        if (typeof choice.additional_reward === 'number') {
-            addToInventory(choice.additional_reward, route.params.storyId, scene.value.id);
-        }
-        else if (Array.isArray(choice.additional_reward)) {
-            choice.additional_reward.forEach(itemId => {
-                addToInventory(parseInt(itemId), route.params.storyId, scene.value.id);
-            });
-        } 
-        else if (typeof choice.additional_reward === 'string') {
-            try {
-                const parsed = JSON.parse(choice.additional_reward);
-                if (Array.isArray(parsed)) {
-                    parsed.forEach(itemId => addToInventory(parseInt(itemId), route.params.storyId, scene.value.id));
-                } else {
-                    addToInventory(parseInt(parsed), route.params.storyId, scene.value.id);
-                }
-            } catch (e) {
-                if (choice.additional_reward.startsWith('[') && choice.additional_reward.endsWith(']')) {
-                    const content = choice.additional_reward.substring(1, choice.additional_reward.length - 1);
-                    const ids = content.split(',').map(id => parseInt(id.trim()));
-                    ids.forEach(id => {
-                        if (!isNaN(id)) {
-                            addToInventory(id, route.params.storyId, scene.value.id);
-                        }
-                    });
-                } else {
-                    const id = parseInt(choice.additional_reward);
-                    if (!isNaN(id)) {
-                        addToInventory(id, route.params.storyId, scene.value.id);
-                    }
+    if (choice.additional_rewards) {
+        let rewards = [];
 
+        if (Array.isArray(choice.additional_rewards)) {
+            rewards = choice.additional_rewards;
+        } else if (typeof choice.additional_rewards === 'string') {
+            try {
+                const parsed = JSON.parse(choice.additional_rewards);
+                rewards = Array.isArray(parsed) ? parsed : [parsed];
+            } catch (e) {
+                if (choice.additional_rewards.startsWith('[') && choice.additional_rewards.endsWith(']')) {
+                    rewards = choice.additional_rewards
+                        .slice(1, -1)
+                        .split(',')
+                        .map(id => parseInt(id.trim()))
+                        .filter(id => !isNaN(id));
+                } else {
+                    const id = parseInt(choice.additional_rewards);
+                    if (!isNaN(id)) {
+                        rewards = [id];
+                    }
                 }
+            }
+        } else if (typeof choice.additional_rewards === 'number') {
+            rewards = [choice.additional_rewards];
+        }
+
+        for (const rewardId of rewards) {
+            if (!isNaN(rewardId)) {
+                addToInventory(rewardId, route.params.storyId, scene.value.id);
             }
         }
     }
@@ -268,7 +257,6 @@
       const isCorrect = checkRiddleAnswer(choice, answer.trim());
       
       if (isCorrect) {
-        console.log("Réponse correcte !");
         // Réinitialiser les erreurs
         riddleErrors.value[choice.id] = false;
         
@@ -278,9 +266,6 @@
           router.push(`/story/${route.params.storyId}/scene/${choice.next_scene_id}`);
         }
       } else {
-        console.log("Réponse incorrecte");
-        riddleErrors.value[choice.id] = true;
-        
         // Incrémenter le compteur d'essais
         if (!riddleAttempts.value[choice.id]) {
           riddleAttempts.value[choice.id] = 1;
@@ -350,7 +335,6 @@
   
   // Charger la scène et l'inventaire au démarrage
   onMounted(() => {
-    console.log("Montage du composant ScenePage");
     loadInventory();
     loadScene();
     
@@ -363,7 +347,6 @@
   
   // Surveiller les changements d'ID de scène pour recharger
   watch(() => route.params.sceneId, (newId, oldId) => {
-    console.log(`ID de scène changé: ${oldId} -> ${newId}`);
     if (newId !== oldId) {
       loadScene();
     }

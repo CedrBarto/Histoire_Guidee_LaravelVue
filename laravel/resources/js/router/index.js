@@ -1,7 +1,7 @@
 // resources/js/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
-import StoryList from '../pages/StoriesPage.vue';
+import StoriesPage from '../pages/StoriesPage.vue';
 import ScenePage from '../components/ScenePage.vue';
 import ErrorPage from '../pages/ErrorPage.vue';
 
@@ -14,7 +14,7 @@ const routes = [
   {
     path: '/stories',
     name: 'stories',
-    component: StoryList
+    component: StoriesPage
   },
   {
     path: '/story/:storyId/scene/:sceneId',

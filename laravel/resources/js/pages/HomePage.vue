@@ -1,3 +1,4 @@
+<!-- Crée l'affichage de la page d'accueil -->
 <template>
   <div class="home-page">
     <div class="home-content">
