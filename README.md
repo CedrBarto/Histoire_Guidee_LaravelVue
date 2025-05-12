@@ -1,13 +1,13 @@
 # Projet Histoire Guidée
 
-Projet de cours Laravel/Vue. 
-Développement d'une application web interactive permettant aux utilisateurs de vivre des histoires guidées avec des choix, des énigmes et un système d'inventaire.
+Développement d'un projet fullstack Laravel et Vue permettant aux utilisateurs de jouer à des histoires guidées par des choix, des énigmes et un système d'inventaire.
+Actuellement qu'une seule histoire est a été développée.
 
 ## 🎮 Fonctionnalités
 
-- **Histoires Interactives** : Parcourez différentes histoires avec des choix multiples
+- **Histoire Guidée** : Parcourez une histoire originale avec des choix multiples
 - **Système d'Énigmes** : Résolvez des énigmes pour progresser dans l'histoire
-- **Inventaire** : Collectez et gérez des objets tout au long de votre aventure
+- **Inventaire** : Collectez des objets durant votre histoire
 - **Système de Progression** : Sauvegardez votre progression et reprenez vos histoires plus tard
 - **Interface Responsive** : Compatible avec tous les appareils
 
@@ -26,8 +26,6 @@ Développement d'une application web interactive permettant aux utilisateurs de 
 - `resources/views/` : Templates Blade
 - `routes/web.php` : Définition des routes
 
-## 🎨 Fonctionnalités Principales
-
 ### Histoires
 - Liste des histoires disponibles
 - Système de progression par histoire
@@ -37,20 +35,19 @@ Développement d'une application web interactive permettant aux utilisateurs de 
 ### Scènes
 - Affichage dynamique des scènes
 - Système de choix multiples
-- Énigmes interactives
-- Gestion des images (concept du son mis en place mais non utilisé)
+- Énigmes à résoudre
+- Gestion des images (concept du son imaginé mais non utilisé pour des raisons techniques) 
 
 ### Inventaire
 - Collecte d'objets
-- Sauvegarde persistante
+- Sauvegarde des objets
 - Affichage dans l'interface
 
 ## 🔒 Sécurité
 
-- Authentification utilisateur
+- Authentification utilisateur nécessaire
 - Protection CSRF
 - Validation des entrées
-- Gestion sécurisée des sessions
 
 ## 👥 Auteurs
 
