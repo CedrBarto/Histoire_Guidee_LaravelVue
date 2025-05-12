@@ -1,3 +1,5 @@
+<!-- Vue backend pour l'affichage de la page d'entrée du site avec gestion connexion/inscription -->
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -81,6 +83,8 @@
             align-items: center;
             text-align: center;
             padding: 2rem;
+            width: 100%;
+            margin-left: 6%;
         }
         
         .logo {
@@ -141,14 +145,13 @@
     </div>
 
     <div class="container">
-        <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="logo" onerror="this.src='https://laravel.com/img/logomark.min.svg'; this.onerror=null;">
         <h1>Histoire Guidée</h1>
         <p class="description">
-            Bienvenue dans notre application d'histoires interactives. Connectez-vous ou inscrivez-vous pour commencer votre aventure.
+            Bienvenue dans l'application d'histoires interactives. Connectez-vous ou inscrivez-vous pour commencer une histoire.
         </p>
         @if (Route::has('login'))
             @auth
-                <a href="{{ url('/home') }}" class="start-btn">Commencer l'aventure</a>
+                <a href="{{ url('/home') }}" class="start-btn">Découvrir</a>
             @else
                 <a href="{{ route('login') }}" class="start-btn">Connexion</a>
             @endauth

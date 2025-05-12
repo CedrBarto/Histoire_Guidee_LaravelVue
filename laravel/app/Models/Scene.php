@@ -23,13 +23,13 @@ class Scene extends Model
         'is_ending' => 'boolean',
     ];
 
-    // Relation with story
+    // Relation avec l'histoire
     public function story()
     {
         return $this->belongsTo(Story::class);
     }
 
-    // Relation with choices
+    // Relation avec les choix
     public function choices()
     {
         return $this->hasMany(Choice::class);
