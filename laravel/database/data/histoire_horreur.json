@@ -114,14 +114,14 @@
     },
     {
       "id": 7,
-      "title": "Énigme : résouds le rébus",
-      "description": "Un rébus est affiché sur le mur. Résous-le pour avancer.",
+      "title": "L'énigme",
+      "description": "Une énigme est affichée sur le mur, sauras-tu la résoudre ?.",
       "image": "scene7.png",
       "sound": null,
       "is_ending": false,
       "choices": [
         {
-          "text": "Résoudre le rébus",
+          "text": "Résoudre l'énigme",
           "next_scene_id": 9,
           "type": "riddle",
           "answer": "la mort, mort"

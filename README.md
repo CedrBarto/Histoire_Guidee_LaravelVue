@@ -15,16 +15,8 @@ Développement d'une application web interactive permettant aux utilisateurs de 
 
 - **Backend** : Laravel (PHP)
 - **Frontend** : Vue.js
-- **Base de données** : MySQL/SQLite
+- **Base de données** : SQLite
 - **Authentication** : Laravel Breeze
-
-## 📋 Prérequis
-
-- PHP >= 8.1
-- Composer
-- Node.js & NPM
-- MySQL ou PostgreSQL
-- Serveur web (Apache/Nginx)
 
 ## 🎯 Structure du Projet
 
@@ -32,7 +24,7 @@ Développement d'une application web interactive permettant aux utilisateurs de 
 - `resources/js/components/` : Composants Vue.js
 - `resources/js/pages/` : Pages principales de l'application
 - `resources/views/` : Templates Blade
-- `routes/` : Définition des routes
+- `routes/web.php` : Définition des routes
 
 ## 🎨 Fonctionnalités Principales
 
@@ -46,7 +38,7 @@ Développement d'une application web interactive permettant aux utilisateurs de 
 - Affichage dynamique des scènes
 - Système de choix multiples
 - Énigmes interactives
-- Gestion des images et sons
+- Gestion des images (concept du son mis en place mais non utilisé)
 
 ### Inventaire
 - Collecte d'objets
