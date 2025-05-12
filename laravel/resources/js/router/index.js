@@ -23,13 +23,29 @@ const routes = [
     props: true,
     // Ajouter un garde de navigation ici
     beforeEnter: (to, from, next) => {
-      // Si l'utilisateur vient d'une autre scène ou de la liste d'histoires, c'est ok
+      // Autoriser navigation normale depuis une scène ou la liste
       if (from.name === 'scene' || from.name === 'stories') {
-        next(); // Autoriser la navigation
-      } else {
-        // Sinon, rediriger vers la page d'histoires
-        next({ name: 'stories' });
+        return next();
       }
+
+      // Autoriser accès direct uniquement si la progression correspond à la scène demandée
+      const savedProgress = localStorage.getItem('story_progress');
+      if (savedProgress) {
+        try {
+          const progress = JSON.parse(savedProgress);
+          if (
+            progress.storyId == to.params.storyId &&
+            progress.sceneId == to.params.sceneId
+          ) {
+            return next();
+          }
+        } catch (e) {
+          // Ignore parsing error
+        }
+      }
+
+      // Sinon, rediriger vers la page d'histoires
+      next({ name: 'stories'});
     }
   },
   // Attraper toutes les routes non définies et afficher la page d'erreur

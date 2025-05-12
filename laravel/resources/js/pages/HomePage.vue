@@ -2,10 +2,10 @@
 <template>
   <div class="home-page">
     <div class="home-content">
-      <h1>Histoires Interactives</h1>
+      <h1>Histoires Guidées</h1>
       <div class="home-description">
-        <p>Bienvenue dans le monde des histoires interactives où vos choix comptent.</p>
-        <p>Explorez nos histoires et plongez dans des aventures immersives.</p>
+        <p>Bienvenue dans le monde des histoires guidées où vos choix comptent.</p>
+        <p>Explorez les histoires et plongez dans des aventures immersives.</p>
       </div>
       
       <div class="home-actions">

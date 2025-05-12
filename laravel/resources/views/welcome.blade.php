@@ -147,7 +147,7 @@
     <div class="container">
         <h1>Histoire Guidée</h1>
         <p class="description">
-            Bienvenue dans l'application d'histoires interactives. Connectez-vous ou inscrivez-vous pour commencer une histoire.
+            Bienvenue dans l'application d'histoires guidées. Connectez-vous ou inscrivez-vous pour commencer une histoire.
         </p>
         @if (Route::has('login'))
             @auth

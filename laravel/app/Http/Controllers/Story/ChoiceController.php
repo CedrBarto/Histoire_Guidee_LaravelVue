@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ChoiceController extends Controller
 {
     /**
-     * Process a player choice and return the next scene
+     * Gère les choix de l'utilisateur dans le jeu
      */
     public function makeChoice($id)
     {
@@ -21,7 +21,7 @@ class ChoiceController extends Controller
     }
     
     /**
-     * Get all available choices for a specific scene
+     * Récupère tous les choix disponibles pour une scène spécifique
      */
     public function getChoicesForScene($sceneId)
     {
@@ -31,7 +31,7 @@ class ChoiceController extends Controller
     }
 
     /**
-     * Display a listing of all choices
+     * Affiche une liste de tous les choix
      */
     public function index()
     {
@@ -41,7 +41,7 @@ class ChoiceController extends Controller
     }
 
     /**
-     * Display the specified choice
+     * Affiche un choix spécifique
      */
     public function show($id)
     {
@@ -51,7 +51,7 @@ class ChoiceController extends Controller
     }
 
     /**
-     * Store a newly created choice
+     *  Crée un nouveau choix
      */
     public function store(Request $request)
     {
@@ -59,7 +59,6 @@ class ChoiceController extends Controller
             'scene_id' => 'required|exists:scenes,id',
             'text' => 'required|string|max:255',
             'next_scene_id' => 'required|exists:scenes,id',
-            // Add other validation rules as needed
         ]);
         
         $choice = new Choice();
@@ -72,7 +71,7 @@ class ChoiceController extends Controller
     }
 
     /**
-     * Update the specified choice
+     * Met à jour le choix spécifié
      */
     public function update(Request $request, $id)
     {
@@ -82,7 +81,6 @@ class ChoiceController extends Controller
             'scene_id' => 'exists:scenes,id',
             'text' => 'string|max:255',
             'next_scene_id' => 'exists:scenes,id',
-            // Add other validation rules as needed
         ]);
         
         $choice->update($validated);
@@ -91,7 +89,7 @@ class ChoiceController extends Controller
     }
 
     /**
-     * Remove the specified choice
+     * Supprime le choix spécifié
      */
     public function destroy($id)
     {

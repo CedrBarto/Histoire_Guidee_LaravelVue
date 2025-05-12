@@ -1,7 +1,7 @@
 <template>
     <footer class="app-footer">
-        <p>© 2025 Histoire d'Horreur Interactive</p>
-        <p>Projet HEIG Laravel - Vue</p>
+        <p>© 2025 Histoires Guidées</p>
+        <p>Projet HEIG FullStack</p>
     </footer>
 </template>
 

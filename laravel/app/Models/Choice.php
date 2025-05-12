@@ -25,13 +25,13 @@ class Choice extends Model
         'additional_rewards' => 'json',
     ];
 
-    // Relationship with the scene this choice belongs to
+    //Relation avec la scène à laquelle ce choix appartient
     public function scene()
     {
         return $this->belongsTo(Scene::class);
     }
 
-    // Relationship with the next scene this choice leads to
+    //Relation avec la scène suivante à laquelle ce choix mène
     public function nextScene()
     {
         return $this->belongsTo(Scene::class, 'next_scene_id');
