@@ -19,7 +19,7 @@
               <img :src="`/images/scenes/${scene.image}`" :alt="scene.title">
             </div>
             
-            <div class="scene-description" v-html="scene.content"></div>
+            <div class="scene-description" v-html="scene.description"></div>
             
             <!-- Si c'est une fin, afficher le bouton retour -->
             <div v-if="scene.is_ending" class="ending">
@@ -49,18 +49,15 @@
                 
                 <!-- Énigme (riddle) -->
                 <div v-else-if="choice.type === 'riddle'" class="riddle-choice">
-                  <p>{{ choice.text }}</p>
-                  <div class="riddle-attempts" v-if="riddleAttempts[choice.id]">
-                    <p class="attempts-warning">Réfléchis bien ! Tu as plus que {{ 3 - riddleAttempts[choice.id] }} tentative(s)...</p>
-                  </div>
-                  <div class="riddle-input">
+                  <div class="riddle-input-flex">
+                    <button @click="submitRiddle(choice)" class="choice-btn riddle-btn">{{ choice.text }}</button>
                     <input 
                       type="text" 
                       v-model="riddleAnswers[choice.id]" 
                       placeholder="Votre réponse..." 
                       @keyup.enter="submitRiddle(choice)"
+                      class="riddle-answer-input"
                     />
-                    <button @click="submitRiddle(choice)">Tenter sa chance</button>
                   </div>
                   <p v-if="riddleErrors[choice.id]" class="riddle-error">
                     Mauvaise réponse. Essaie encore.
@@ -171,6 +168,11 @@
         // Si c'est la première scène (ID 1), réinitialiser l'inventaire
         if (scene.value.id === 1) {
           resetInventory();
+        }
+
+        // Si c'est la scène 6, retirer l'item 1 de l'inventaire
+        if (scene.value.id === 6) {
+          removeFromInventory(1, route.params.storyId, scene.value.id);
         }
         
         // Sauvegarder automatiquement la progression à chaque nouvelle scène
@@ -354,20 +356,28 @@
   </script>
   
   <style scoped>
+  :global(html), :global(body) {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
   .scene-page {
     max-width: 100%;
     margin: 0 auto;
-    min-height: calc(100vh - 100px);
+    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
-  
   .scene-content {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    height: calc(100vh - 70px);
+    height: 100vh;
     margin-top: 50px;
+    overflow: hidden;
   }
   
   .scene-header {
@@ -404,14 +414,14 @@
   }
   
   .scene-image {
-    margin: 1rem 0;
-    height: 40vh;
+    margin: 0.5rem 0 2rem 0;
+    max-height: calc(60vh - 80px);
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.3);
   }
   
   .scene-image img {
@@ -419,6 +429,8 @@
     max-height: 100%;
     object-fit: contain;
     border-radius: 8px;
+
+
   }
   
   .scene-description {
@@ -502,33 +514,33 @@
   
   /* Styles pour les énigmes */
   .riddle-choice {
-    border: 1px solid #5a1414;
-    padding: 1rem;
-    border-radius: 8px;
-    background-color: rgba(90, 20, 20, 0.2);
+    border-radius: 4px;
   }
   
-  .riddle-input {
+  .riddle-input-flex {
     display: flex;
-    margin-top: 1rem;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
   }
   
-  .riddle-input input {
-    flex-grow: 1;
-    padding: 0.5rem;
+  .riddle-btn {
+    white-space: nowrap;
+    flex: 1 1 0;
+    max-width: 100%;
+  }
+  
+  .riddle-answer-input {
+    flex: 1 1 0;
+    max-width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
     border: 1px solid #333;
     background-color: #1a1a1a;
     color: white;
-    border-radius: 4px 0 0 4px;
-  }
-  
-  .riddle-input button {
-    background-color: #5a1414;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
+    border-radius: 4px;
+    box-sizing: border-box;
   }
   
   .riddle-error {

@@ -13,7 +13,7 @@ export default {
 
 <style scoped>
 .app-footer {
-    padding: 20px;
+    padding: 12px 20px;
     background-color: rgba(25, 5, 5, 0.8);
     color: white;
     text-align: center;
@@ -22,10 +22,16 @@ export default {
     left: 0;
     right: 0;
     z-index: 100;
+    font-size: 0.95rem;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .app-footer p {
-    margin: 5px 0;
+    margin: 0 0 1px 0;
 }
 
 /* Ajouter un padding-bottom au contenu principal pour éviter que le footer ne cache du contenu */

@@ -2,7 +2,7 @@
   <div class="inventory">
       <h3 class="inventory-title">Inventaire</h3>
       <div v-if="!items || items.length === 0" class="empty-inventory">
-          <p>Votre sac est vide</p>
+          <p>Votre inventaire est vide</p>
       </div>
       <div v-else class="inventory-items">
           <div v-for="item in items" :key="item.id" class="inventory-item">
