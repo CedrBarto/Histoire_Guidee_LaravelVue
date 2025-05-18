@@ -28,7 +28,7 @@ export function useInventory() {
                 itemsData.value = progress.itemsData || {};
                 loadMissingItemsData();
             } catch (e) {
-                // Ne garder que les logs vraiment critiques (ex: catch d'erreur critique), sinon tout supprimer
+                // Ne garde que les logs vraiment critiques (ex: catch d'erreur critique), sinon tout supprimer
             }
         }
     }
@@ -88,7 +88,7 @@ export function useInventory() {
             }
             return null;
         } catch (error) {
-            // Ne garder que les logs vraiment critiques (ex: catch d'erreur critique), sinon tout supprimer
+            // Ne garde que les logs vraiment critiques (ex: catch d'erreur critique), sinon tout supprimer
             return null;
         }
     }

@@ -34,7 +34,7 @@ export default {
     margin: 0 0 1px 0;
 }
 
-/* Ajouter un padding-bottom au contenu principal pour éviter que le footer ne cache du contenu */
+/* Ajoute un padding-bottom au contenu principal pour éviter que le footer ne cache du contenu */
 :deep(body) {
     padding-bottom: 100px;
 }

@@ -39,7 +39,7 @@ body {
 .main-content {
     flex: 1;
     padding: 20px;
-    margin-bottom: 100px; /* Espace pour le footer */
+    margin-bottom: 100px;
 }
 
 /* Styles globaux */
@@ -58,26 +58,12 @@ a:hover {
     color: #ff8f8f;
 }
 
+button:hover {
+    color: #ff8f8f;
+}
+
 button {
     cursor: pointer;
     transition: all 0.2s;
-}
-
-/* Scrollbar personnalisée */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
 }
 </style>

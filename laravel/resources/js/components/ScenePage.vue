@@ -15,6 +15,13 @@
         
         <div class="main-content">
           <div class="scene-main">
+            <!-- Notification de sauvegarde -->
+            <transition name="fade">
+              <div v-if="showSaveNotification" class="save-notification">
+                Progression sauvegardée
+              </div>
+            </transition>
+            
             <div v-if="scene.image" class="scene-image">
               <img :src="`/images/scenes/${scene.image}`" :alt="scene.title">
             </div>
@@ -59,15 +66,14 @@
                       class="riddle-answer-input"
                     />
                   </div>
-                  <p v-if="riddleErrors[choice.id]" class="riddle-error">
-                    Mauvaise réponse. Essaie encore.
+                  <p v-if="riddleAttempts[choice.id]" class="attempts-warning">
+                    Réfléchis bien, tu n'as plus que {{ 3 - riddleAttempts[choice.id] }} tentative{{ 3 - riddleAttempts[choice.id] > 1 ? 's' : '' }} ou la mort t'attrapera...
                   </p>
                 </div>
               </div>
             </div>
           </div>
           
-          <!-- Inventaire placé à droite -->
           <div class="inventory-container">
             <Inventory :items="items" />
           </div>
@@ -80,22 +86,15 @@
   import { ref, onMounted, watch } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
   import { useFetchJson } from '../composables/useFetchJson';
-  import Inventory from '../components/Inventory.vue'; // Import du composant d'inventaire
+  import Inventory from '../components/Inventory.vue';
   import { useInventory } from '../composables/useInventory';
-  
-  // Débogage global pour voir les valeurs dans la console du navigateur
-  window.debugInventory = function() {
-    const progress = JSON.parse(localStorage.getItem('story_progress') || '{}');
-    console.log("Progression stockée:", progress);
-    console.log("Inventaire stocké:", progress.inventory);
-    return progress;
-  };
   
   const router = useRouter();
   const route = useRoute();
   const scene = ref(null);
   const loading = ref(true);
   const error = ref(null);
+  const showSaveNotification = ref(false);
   
   // Pour les énigmes
   const riddleAnswers = ref({});
@@ -141,7 +140,12 @@
       itemsData: itemsData
     };
     localStorage.setItem('story_progress', JSON.stringify(progress));
-    console.log('Progression sauvegardée:', progress);
+    
+    // Afficher la notification de sauvegarde
+    showSaveNotification.value = true;
+    setTimeout(() => {
+      showSaveNotification.value = false;
+    }, 2000);
   }
   
   function loadProgress() {
@@ -558,67 +562,29 @@
     font-weight: bold;
   }
   
-  /* Style pour les notifications d'objets obtenus */
-  .item-notification {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgba(90, 20, 20, 0.9);
-    padding: 15px;
-    border-radius: 8px;
+  /* Style pour la notification de sauvegarde */
+  .save-notification {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(128, 128, 128, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 8px 16px;
+    border-radius: 4px;
     z-index: 100;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    animation: slide-in 0.3s ease-out;
+    font-size: 0.9rem;
+    pointer-events: none;
+    margin-top: 80px;
   }
   
-  .notification-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* Animation de fade pour la notification */
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s ease;
   }
   
-  .notification-content p {
-    margin: 0 20px 0 0;
-    color: white;
-  }
-  
-  .notification-content button {
-    background-color: white;
-    color: #5a1414;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  @keyframes slide-in {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  /* Scrollbar personnalisée pour le contenu principal */
-  .scene-main::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .scene-main::-webkit-scrollbar-track {
-    background: #1a1a1a;
-    border-radius: 4px;
-  }
-  
-  .scene-main::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 4px;
-  }
-  
-  .scene-main::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  .fade-enter-from, .fade-leave-to {
+    opacity: 0;
   }
   
   /* Media queries pour la responsivité */
@@ -634,6 +600,10 @@
     
     .scene-main {
       padding-right: 0;
+    }
+
+    .save-notification {
+      margin-top: 120px; /* Notif Responsive sur mobile : Augmente la marge en haut pour éviter le chevauchement avec le titre */
     }
   }
   
@@ -654,6 +624,10 @@
     
     .scene-description {
       font-size: 1rem;
+    }
+
+    .save-notification {
+      margin-top: 100px;
     }
   }
   </style>

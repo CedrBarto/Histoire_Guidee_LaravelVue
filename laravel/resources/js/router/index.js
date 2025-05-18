@@ -48,7 +48,7 @@ const routes = [
       next({ name: 'stories'});
     }
   },
-  // Attraper toutes les routes non définies et afficher la page d'erreur
+  // Attrape toutes les routes non définies et afficher la page d'erreur
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
